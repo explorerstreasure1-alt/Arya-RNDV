@@ -1,6 +1,7 @@
 import { put } from '@vercel/blob';
 
 export default async function handler(request) {
+  // CORS preflight
   if (request.method === 'OPTIONS') {
     return new Response(null, {
       headers: {
@@ -29,6 +30,7 @@ export default async function handler(request) {
       });
     }
 
+    // Token'ı environment'dan otomatik alır (process.env.BLOB_READ_WRITE_TOKEN)
     const blob = await put(file.name, file, {
       access: 'public',
       addRandomSuffix: true,
